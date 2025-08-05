@@ -4,6 +4,6 @@ packages=urls[
 package=cd //https://raw.githubusercontent.com/eymuz/QickCrystal-Armc/main/cd.bat
 package=delele //https://raw.githubusercontent.com/eymuz/QickCrystal-Armc/main/del.bat
 package=service //https://raw.githubusercontent.com/eymuz/QickCrystal-Armc/main/service.bat
-package=service ////https://raw.githubusercontent.com/eymuz/QickCrystal-Armc/main/start.bat
+package=start ////https://raw.githubusercontent.com/eymuz/QickCrystal-Armc/main/start.bat
 ]
 load_packages//
