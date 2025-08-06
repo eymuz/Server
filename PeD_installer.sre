@@ -1,6 +1,8 @@
 SRE (SERVER FİLE)
 pkg_settings_ser. -Https -Github_Raw
 packages=urls[
+package=cls //https://raw.githubusercontent.com/eymuz/QickCrystal-Armc/main/cls.bat
+package=function //https://raw.githubusercontent.com/eymuz/QickCrystal-Armc/main/function.bat
 package=cd //https://raw.githubusercontent.com/eymuz/QickCrystal-Armc/main/cd.bat
 package=delete //https://raw.githubusercontent.com/eymuz/QickCrystal-Armc/main/del.bat
 package=service //https://raw.githubusercontent.com/eymuz/QickCrystal-Armc/main/service.bat
