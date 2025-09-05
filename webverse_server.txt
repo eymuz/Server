@@ -1,0 +1,4 @@
+name=Myserver 
+url=www.servercom.any 
+setkey=A=alert"YASAKLI BLOK" 
+resolution-Bit_number=250  
