@@ -1,7 +1,8 @@
 name=Default server
-url=https://consultants-blend-antivirus-namespace.trycloudflare.com
+url=https://consultants-blend-antivirus-namespace.trycloudflare.com/ws
 setkey=A=alert"YASAKLI BLOK" 
 
 resolution-Bit_number=250  
+
 
 
