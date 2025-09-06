@@ -1,6 +1,7 @@
 name=Default server
-url=https://transmit-contractors-ripe-exit.trycloudflare.com
+url=https://consultants-blend-antivirus-namespace.trycloudflare.com
 setkey=A=alert"YASAKLI BLOK" 
 
 resolution-Bit_number=250  
+
 
