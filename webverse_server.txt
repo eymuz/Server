@@ -1,5 +1,6 @@
 name=Default server
-url=https://assessments-hosted-reservoir-tongue.trycloudflare.com
+url=https://transmit-contractors-ripe-exit.trycloudflare.com
 setkey=A=alert"YASAKLI BLOK" 
 
 resolution-Bit_number=250  
+
