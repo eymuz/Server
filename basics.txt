@@ -1,0 +1,1 @@
+netres: "https://raw.githubusercontent.com/eymuz/Server/master/network_reset_win11-10.zip"
