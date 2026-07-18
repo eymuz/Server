@@ -29,7 +29,7 @@ while true do
                 mon.write("Launch Logs")
                 local t = textutils.formatTime(os.time(), true)
                 mon.setCursorPos(1,2)
-                mon.write(t .. " Launch Process is Started")
+                mon.write(t .. "  Launch Process is Started")
                 relay.setOutput("right", true) 
             end
 
