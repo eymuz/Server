@@ -1,26 +1,26 @@
 local relay = peripheral.wrap("redstone_relay_0")
-local state = false  -- başlangıçta kapalı
+local state = false  -- Başlangıçta kapalı
 
 while true do
     -- Arka yüzden sinyal kontrolü
-    if relay.getInput("south") then
+    if relay.getInput("back") then
         -- Toggle mantığı
         state = not state
 
         if state then
             -- Sağ yüzü aktif et
-            relay.setOutput("east", true)
+            relay.setOutput("right", true)
             shell.run("on.lua")
         else
             -- Sağ yüzü kapat
-            relay.setOutput("east", false)
+            relay.setOutput("right", false)
             shell.run("off.lua")
         end
 
-        -- Tek sinyal algılaması için kısa bekleme
+        -- Tek tetikleme için kısa bekleme
         sleep(0.5)
         -- Sinyal bitene kadar bekle
-        while relay.getInput("south") do
+        while relay.getInput("back") do
             sleep(0.1)
         end
     end
