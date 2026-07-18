@@ -2,19 +2,19 @@
 local relay = peripheral.wrap("redstone_relay_0")
 local spk = peripheral.wrap("speaker_0")
 local mon = peripheral.wrap("monitor_1")
-local relay2 = peripheral.wrap("redstone_relay_2")
+local relay2 = peripheral.wrap("redstone_relay_1")
 
-local state = false  -- toggle durumu
+local mode = "none" -- başlangıçta sistem kapalı
 
 print("Start.lua is running...")
 
 while true do
     if relay.getInput("back") then
-        state = not state
-
-        if state then
+        -- Basıldığında mod değiştir
+        if mode == "none" or mode == "off" then
+            mode = "on"
             -------------------
-            -- Kalkış (ON) bölümü
+            -- ON sistemi (Launch Logs)
             -------------------
             if spk then
                 for i = 1, 3 do
@@ -36,26 +36,10 @@ while true do
                 mon.write(t .. "  Launch Process is Started")
             end
 
-            -- Relay2 girişini sürekli güncelle
-            while state do
-                if mon and relay2 then
-                    local level = relay2.getAnalogInput("front")
-                    local t = textutils.formatTime(os.time(), true)
-                    mon.setCursorPos(1,3)
-                    mon.clearLine()
-                    mon.write(t .. "  Relay2 Front Level: " .. tostring(level))
-                end
-                sleep(0.5)
-                if relay.getInput("back") then
-                    state = not state
-                    sleep(0.5)
-                    while relay.getInput("back") do sleep(0.1) end
-                end
-            end
-
-        else
+        elseif mode == "on" then
+            mode = "off"
             -------------------
-            -- İniş (FALL) bölümü
+            -- OFF sistemi (Fall Logs)
             -------------------
             if spk then
                 for i = 1, 3 do
@@ -77,28 +61,21 @@ while true do
                 mon.setCursorPos(1,2)
                 mon.write(t .. "  FALLING!!!")
             end
-
-            -- Relay2 girişini sürekli güncelle
-            while not state do
-                if mon and relay2 then
-                    local level = relay2.getAnalogInput("front")
-                    local t = textutils.formatTime(os.time(), true)
-                    mon.setCursorPos(1,3)
-                    mon.clearLine()
-                    mon.write(t .. "  Relay2 Front Level: " .. tostring(level))
-                end
-                sleep(0.5)
-                if relay.getInput("back") then
-                    state = not state
-                    sleep(0.5)
-                    while relay.getInput("back") do sleep(0.1) end
-                end
-            end
         end
 
         -- Tek tetikleme için bekleme
         sleep(0.5)
         while relay.getInput("back") do sleep(0.1) end
     end
-    sleep(0.1)
+
+    -- Sürekli relay2 durumunu güncelle
+    if mon and relay2 then
+        local level = relay2.getAnalogInput("front")
+        local t = textutils.formatTime(os.time(), true)
+        mon.setCursorPos(1,3)
+        mon.clearLine()
+        mon.write(t .. "  Relay2 Front Level: " .. tostring(level))
+    end
+
+    sleep(0.5)
 end
