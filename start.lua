@@ -1,29 +1,104 @@
+-- start.lua
 local relay = peripheral.wrap("redstone_relay_0")
-local state = false  -- Başlangıçta kapalı
+local spk = peripheral.wrap("speaker_0")
+local mon = peripheral.wrap("monitor_1")
+local relay2 = peripheral.wrap("redstone_relay_2")
+
+local state = false  -- toggle durumu
+
+print("Start.lua is running...")
 
 while true do
-    -- Arka yüzden sinyal kontrolü
     if relay.getInput("back") then
-        -- Toggle mantığı
         state = not state
 
         if state then
-            -- Sağ yüzü aktif et
-            relay.setOutput("right", true)
-            shell.run("on.lua")
+            -------------------
+            -- Kalkış (ON) bölümü
+            -------------------
+            if spk then
+                for i = 1, 3 do
+                    spk.playSound("entity.firework.launch", 1, 1)
+                    sleep(0.5)
+                end
+                spk.playSound("block.beacon.activate", 1, 1)
+            end
+
+            if mon then
+                mon.setBackgroundColor(colors.black)
+                mon.setTextColor(colors.green)
+                mon.clear()
+                mon.setCursorPos(1,1)
+                mon.write("Launch Logs")
+
+                local t = textutils.formatTime(os.time(), true)
+                mon.setCursorPos(1,2)
+                mon.write(t .. "  Launch Process is Started")
+            end
+
+            -- Relay2 girişini sürekli güncelle
+            while state do
+                if mon and relay2 then
+                    local level = relay2.getAnalogInput("front")
+                    local t = textutils.formatTime(os.time(), true)
+                    mon.setCursorPos(1,3)
+                    mon.clearLine()
+                    mon.write(t .. "  Relay2 Front Level: " .. tostring(level))
+                end
+                sleep(0.5)
+                if relay.getInput("back") then
+                    state = not state
+                    sleep(0.5)
+                    while relay.getInput("back") do sleep(0.1) end
+                end
+            end
+
         else
-            -- Sağ yüzü kapat
-            relay.setOutput("right", false)
-            shell.run("off.lua")
+            -------------------
+            -- İniş (FALL) bölümü
+            -------------------
+            if spk then
+                for i = 1, 3 do
+                    spk.playNote("harp", 1, 24) -- ~2000 Hz
+                    spk.playNote("harp", 1, 6)  -- ~300 Hz
+                    sleep(0.2)
+                end
+                spk.playSound("block.beacon.deactivate", 1, 1)
+            end
+
+            if mon then
+                mon.setBackgroundColor(colors.black)
+                mon.setTextColor(colors.red)
+                mon.clear()
+                mon.setCursorPos(1,1)
+                mon.write("Fall Logs")
+
+                local t = textutils.formatTime(os.time(), true)
+                mon.setCursorPos(1,2)
+                mon.write(t .. "  FALLING!!!")
+            end
+
+            -- Relay2 girişini sürekli güncelle
+            while not state do
+                if mon and relay2 then
+                    local level = relay2.getAnalogInput("front")
+                    local t = textutils.formatTime(os.time(), true)
+                    mon.setCursorPos(1,3)
+                    mon.clearLine()
+                    mon.write(t .. "  Relay2 Front Level: " .. tostring(level))
+                end
+                sleep(0.5)
+                if relay.getInput("back") then
+                    state = not state
+                    sleep(0.5)
+                    while relay.getInput("back") do sleep(0.1) end
+                end
+            end
         end
 
-        -- Tek tetikleme için kısa bekleme
+        -- Tek tetikleme için bekleme
         sleep(0.5)
-        -- Sinyal bitene kadar bekle
-        while relay.getInput("back") do
-            sleep(0.1)
-        end
+        while relay.getInput("back") do sleep(0.1) end
     end
-
     sleep(0.1)
 end
