@@ -14,7 +14,6 @@ while true do
         if mode == "none" or mode == "off" then
             mode = "on"
             -- ON sistemi
-            relay.setOutput("right", true) 
             if spk then
                 for i = 1, 3 do
                     spk.playSound("entity.firework.launch", 1, 1)
@@ -31,12 +30,12 @@ while true do
                 local t = textutils.formatTime(os.time(), true)
                 mon.setCursorPos(1,2)
                 mon.write(t .. " Launch Process is Started")
+                relay.setOutput("right", true) 
             end
 
         elseif mode == "on" then
             mode = "off"
             -- OFF sistemi
-            relay.setOutput("right", false) 
             if spk then
                 for i = 1, 3 do
                     spk.playNote("harp", 1, 24) -- ~2000 Hz
@@ -54,6 +53,7 @@ while true do
                 local t = textutils.formatTime(os.time(), true)
                 mon.setCursorPos(1,2)
                 mon.write(t .. "  FALLING!!!")
+                relay.setOutput("right", false) 
             end
         end
 
