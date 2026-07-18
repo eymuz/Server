@@ -14,6 +14,7 @@ while true do
         if mode == "none" or mode == "off" then
             mode = "on"
             -- ON sistemi
+            relay.setOutput("right", true) 
             if spk then
                 for i = 1, 3 do
                     spk.playSound("entity.firework.launch", 1, 1)
@@ -35,11 +36,12 @@ while true do
         elseif mode == "on" then
             mode = "off"
             -- OFF sistemi
+            relay.setOutput("right", false) 
             if spk then
                 for i = 1, 3 do
                     spk.playNote("harp", 1, 24) -- ~2000 Hz
                     spk.playNote("harp", 1, 6)  -- ~300 Hz
-                    sleep(0.5)
+                    sleep(0.7)
                 end
                 spk.playSound("block.beacon.deactivate", 1, 1)
             end
